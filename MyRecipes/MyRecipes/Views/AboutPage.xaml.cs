@@ -17,9 +17,7 @@ namespace MyRecipes.Views
         readonly RecipeManager manager = new RecipeManager();
 
         public AboutPage()
-        {
-            
-
+        {         
             InitializeComponent();
             BindingContext = recipes;
         }

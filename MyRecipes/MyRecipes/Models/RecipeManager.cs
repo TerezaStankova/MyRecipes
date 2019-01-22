@@ -36,6 +36,12 @@ namespace MyRecipes.Models
             string result = await client.GetStringAsync(queryUrl);
             Result allResult = JsonConvert.DeserializeObject<Result>(result);
             List<Recipe> recipes = allResult.results;
+            for (int i = 2; i<9 && allResult.results.Count > 0; i++) {
+                queryUrl = Url + "?q=" + query + "&p=" + i;
+                result = await client.GetStringAsync(queryUrl);
+                allResult = JsonConvert.DeserializeObject<Result>(result);
+                recipes.AddRange(allResult.results);
+            } 
             return recipes;
         }
     }
