@@ -3,14 +3,105 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using MyRecipes.Models;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 namespace MyRecipes.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AboutPage : ContentPage
     {
+
+        readonly IList<Recipe> recipes = new ObservableCollection<Recipe>();
+        readonly RecipeManager manager = new RecipeManager();
+
         public AboutPage()
         {
+            
+
             InitializeComponent();
+            BindingContext = recipes;
+        }
+
+        async void OnRefresh(object sender, EventArgs e)
+        {
+            // Turn on network indicator
+            this.IsBusy = true;
+
+            try
+            {
+                var recipeCollection = await manager.GetAll();
+
+                foreach (Recipe recipe in recipeCollection)
+                {
+                    //if (recipes.All(b => b.Title != recipe.Title))
+                        recipes.Add(recipe);
+                }
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        async void OnFindButtonClicked(object sender, EventArgs e)
+        {
+            // Turn on network indicator
+            this.IsBusy = true;
+
+            try
+            {
+                string query = newRecipe.Text;
+                var recipeCollection = await manager.GetAll(query);
+
+                foreach (Recipe recipe in recipeCollection)
+                {
+                    //if (recipes.All(b => b.Title != recipe.Title))
+                    recipes.Add(recipe);
+                }
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        async void OnAddNewRecipe(object sender, EventArgs e)
+        {
+            /*await Navigation.PushModalAsync(
+                new AddEditBookPage(manager, books));*/
+        }
+
+        async void OnEditRecipe(object sender, ItemTappedEventArgs e)
+        {
+            //await Navigation.PushModalAsync(
+               // new AddEditBookPage(manager, recipes, (Recipe)e.Item));
+        }
+
+        async void OnDeleteRecipe(object sender, EventArgs e)
+        {
+           /* MenuItem item = (MenuItem)sender;
+            Recipe recipe = item.CommandParameter as Recipe;
+            if (recipe != null)
+            {
+                if (await this.DisplayAlert("Delete Recipe?",
+                    "Are you sure you want to delete the recipe '"
+                        + recipe.Title + "'?", "Yes", "Cancel") == true)
+                {
+                    this.IsBusy = true;
+                    try
+                    {
+                        await manager.Delete(recipe.ISBN);
+                        recipes.Remove(recipe);
+                    }
+                    finally
+                    {
+                        this.IsBusy = false;
+                    }
+
+                }
+            }*/
         }
     }
 }
