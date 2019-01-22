@@ -6,6 +6,7 @@ using Xamarin.Forms.Xaml;
 using MyRecipes.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MyRecipes.Views
 {
@@ -33,7 +34,8 @@ namespace MyRecipes.Views
 
                 foreach (Recipe recipe in recipeCollection)
                 {
-                    //if (recipes.All(b => b.Title != recipe.Title))
+                    if (recipe.thumbnail == "") recipe.thumbnail = "http://www.cookuk.co.uk/images/children_spaghetti_face/children-recipe-pic1-smaller.gif";
+                    if (recipes.All(b => b.title != recipe.title))
                         recipes.Add(recipe);
                 }
             }
@@ -55,7 +57,8 @@ namespace MyRecipes.Views
 
                 foreach (Recipe recipe in recipeCollection)
                 {
-                    //if (recipes.All(b => b.Title != recipe.Title))
+                    if (recipe.thumbnail == "") recipe.thumbnail = "http://www.cookuk.co.uk/images/children_spaghetti_face/children-recipe-pic1-smaller.gif";
+                    if (recipes.All(b => b.title != recipe.title))
                     recipes.Add(recipe);
                 }
             }

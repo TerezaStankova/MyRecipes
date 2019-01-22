@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace MyRecipes.Models
 {
@@ -9,6 +11,8 @@ namespace MyRecipes.Models
         public string title { get; set; }
         public string href { get; set; }
         public string ingredients { get; set; }
+        [DefaultValue("http://www.cookuk.co.uk/images/children_spaghetti_face/children-recipe-pic1-smaller.gif")]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string thumbnail { get; set; }
     }
 }

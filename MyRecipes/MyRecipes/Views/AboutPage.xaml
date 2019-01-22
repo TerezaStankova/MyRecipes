@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyRecipes.Views.AboutPage"
+             x:Class="MyRecipes.Views.AboutPage" x:Name="ThePage" 
              xmlns:vm="clr-namespace:MyRecipes.ViewModels"
+             
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
@@ -23,6 +24,8 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     
+    
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -35,6 +38,14 @@
                 </ContentView>
             </StackLayout>
         </StackLayout>
+
+        <StackLayout IsVisible="{Binding Source={x:Reference ThePage}, Path=IsBusy}"
+                    HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">
+            <Label Text="Loading Data..." TextColor="Gray" HorizontalOptions="Center" />
+            <ActivityIndicator IsRunning="{Binding Source={x:Reference ThePage}, Path=IsBusy}" Color="Accent" >
+            </ActivityIndicator>
+        </StackLayout>
+        
         <ScrollView Grid.Row="1">
             <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
 
@@ -47,19 +58,43 @@
                 <ListView ItemsSource="{Binding}"
                   ItemTapped="OnEditRecipe">
             <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding title}" Detail="A">
-                        <TextCell.ContextActions>
-                            <MenuItem Clicked="OnDeleteRecipe"
+                <DataTemplate>     
+                            
+                                <ViewCell>
+                                    <Grid Padding="0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="75" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Place behind image to fill in the area with white -->
+                                        <BoxView BackgroundColor="White" />
+
+                                        <Image Grid.Column="0" WidthRequest="75" HeightRequest="75" Aspect="Fill" VerticalOptions="Center"
+                                        Source="{Binding thumbnail}"/>
+                                        <StackLayout Grid.Column="1" VerticalOptions="Center" >
+                                            <Label Text="{Binding title}" FontSize="Medium" FontAttributes="Bold" />
+                                            <Label Text="{Binding ingredients, StringFormat='Ingredients: {0:d}'}" FontSize="Small" TextColor="Accent" />
+                                        </StackLayout>
+                                    </Grid>
+                                    <ViewCell.ContextActions>
+                                        <MenuItem Clicked="OnDeleteRecipe"
                         CommandParameter="{Binding}"
                         Text="Delete" IsDestructive="True" />
-                        </TextCell.ContextActions>
-                    </TextCell>
-                </DataTemplate>
+                                    </ViewCell.ContextActions>
+                                </ViewCell>
+                          
+                        </DataTemplate>
             </ListView.ItemTemplate>
             </ListView>
-       
-            
+
+                <Image x:Name="backgroundImage" Source="https://s9.postimg.org/aq1jt3fu7/handshake_87122244_std.jpg" 
+                       AbsoluteLayout.LayoutBounds="0,0,1,1"  
+                       AbsoluteLayout.LayoutFlags="All" HorizontalOptions="FillAndExpand" 
+                       VerticalOptions="FillAndExpand" Aspect="AspectFill"/>
+
+
                 <Label FontSize="22">
                     <Label.FormattedText>
                         <FormattedString>
