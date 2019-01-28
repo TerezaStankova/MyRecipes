@@ -7,7 +7,8 @@ namespace MyRecipes.Models
     public enum MenuItemType
     {
         Browse,
-        About
+        Recipe, 
+        Ingredients
     }
     public class HomeMenuItem
     {

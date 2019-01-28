@@ -5,13 +5,13 @@ using Xamarin.Forms;
 
 namespace MyRecipes.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
+    public class NewViewModel : BaseViewModel
     {
-        public AboutViewModel()
+        public NewViewModel()
         {
             Title = "Find recipe";
 
-            OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
+            //OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
         }
 
         public ICommand OpenWebCommand { get; }

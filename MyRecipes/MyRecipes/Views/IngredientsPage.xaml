@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyRecipes.Views.AboutPage" x:Name="ThePage" 
-             xmlns:vm="clr-namespace:MyRecipes.ViewModels"
-             
+             x:Class="MyRecipes.Views.IngredientsPage" 
+             x:Name="ThePage" 
+             xmlns:vm="clr-namespace:MyRecipes.ViewModels"              
+             xmlns:cvt="clr-namespace:MyRecipes.Services"
              Title="{Binding Title}">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add New" Icon="ic_action_new.png" Clicked="OnAddNewRecipe" />
+    <ContentPage.ToolbarItems>        
         <ToolbarItem Text="Refresh" Icon="ic_autorenew.png" Clicked="OnRefresh" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.BindingContext>
-        <vm:AboutViewModel />
+        <vm:NewViewModel />
     </ContentPage.BindingContext>
     
     <ContentPage.Resources>
@@ -21,6 +21,7 @@
             <Color x:Key="Primary">#2196F3</Color>
             <Color x:Key="Accent">#96d1ff</Color>
             <Color x:Key="LightTextColor">#999999</Color>
+            <cvt:InverseBooleanConverter x:Key="ibConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -34,7 +35,7 @@
         <StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
                 <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
-                    <Image Source="recipes.png" VerticalOptions="Center" HeightRequest="64" />
+                    <Image IsVisible="{Binding Source={x:Reference ThePage}, Path=IsBusy, Converter={StaticResource ibConverter}}" Source="recipes.png" VerticalOptions="Center" HeightRequest="64" />
                 </ContentView>
             </StackLayout>
         </StackLayout>
@@ -44,10 +45,9 @@
             <Label Text="Loading Data..." TextColor="Gray" HorizontalOptions="Center" />
             <ActivityIndicator IsRunning="{Binding Source={x:Reference ThePage}, Path=IsBusy}" Color="Accent" >
             </ActivityIndicator>
-        </StackLayout>
-        
-        <ScrollView Grid.Row="1">
-            <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
+        </StackLayout>       
+     
+            <StackLayout Grid.Row="1" Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
 
             <Entry x:Name="newRecipe"
            Placeholder="Enter recipe name" />            
@@ -76,58 +76,15 @@
                                             <Label Text="{Binding title}" FontSize="Medium" FontAttributes="Bold" />
                                             <Label Text="{Binding ingredients, StringFormat='Ingredients: {0:d}'}" FontSize="Small" TextColor="Accent" />
                                         </StackLayout>
-                                    </Grid>
-                                    <ViewCell.ContextActions>
-                                        <MenuItem Clicked="OnDeleteRecipe"
-                        CommandParameter="{Binding}"
-                        Text="Delete" IsDestructive="True" />
-                                    </ViewCell.ContextActions>
+                                    </Grid>                                  
                                 </ViewCell>
                           
                         </DataTemplate>
             </ListView.ItemTemplate>
-            </ListView>              
-
-
-                <Label FontSize="22">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="My Recipes" FontAttributes="Bold" FontSize="22" />
-                                <Span Text=" " />
-                                <Span Text="1.0" ForegroundColor="{StaticResource LightTextColor}" />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="This app is written in C# and native APIs using the" />
-                                <Span Text=" " />
-                                <Span Text="Xamarin Platform" FontAttributes="Bold" />
-                                <Span Text="." />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="It shares code with its" />
-                                <Span Text=" " />
-                                <Span Text="iOS, Android, and Windows" FontAttributes="Bold" />
-                                <Span Text=" " />
-                                <Span Text="versions." />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>         
+            </ListView>                           
 
 
             </StackLayout>
-        </ScrollView>
+    
     </Grid>
 </ContentPage>

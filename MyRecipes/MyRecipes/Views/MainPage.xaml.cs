@@ -29,8 +29,11 @@ namespace MyRecipes.Views
                     case (int)MenuItemType.Browse:
                         MenuPages.Add(id, new NavigationPage(new ItemsPage()));
                         break;
-                    case (int)MenuItemType.About:
-                        MenuPages.Add(id, new NavigationPage(new AboutPage()));
+                    case (int)MenuItemType.Recipe:
+                        MenuPages.Add(id, new NavigationPage(new NewPage()));
+                        break;
+                    case (int)MenuItemType.Ingredients:
+                        MenuPages.Add(id, new NavigationPage(new IngredientsPage()));
                         break;
                 }
             }

@@ -11,7 +11,7 @@ namespace MyRecipes.Models
         public string title { get; set; }
         public string href { get; set; }
         public string ingredients { get; set; }
-        [DefaultValue("http://www.cookuk.co.uk/images/children_spaghetti_face/children-recipe-pic1-smaller.gif")]
+        [DefaultValue("RecipeBook.png")]
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string thumbnail { get; set; }
     }

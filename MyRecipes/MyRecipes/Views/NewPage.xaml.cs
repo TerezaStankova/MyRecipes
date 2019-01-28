@@ -11,13 +11,13 @@ using System.Linq;
 namespace MyRecipes.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AboutPage : ContentPage
+    public partial class NewPage : ContentPage
     {
 
         readonly IList<Recipe> recipes = new ObservableCollection<Recipe>();
         readonly RecipeManager manager = new RecipeManager();
 
-        public AboutPage()
+        public NewPage()
         {         
             InitializeComponent();
             BindingContext = recipes;
@@ -34,7 +34,7 @@ namespace MyRecipes.Views
 
                 foreach (Recipe recipe in recipeCollection)
                 {
-                    if (recipe.thumbnail == "") recipe.thumbnail = "http://www.cookuk.co.uk/images/children_spaghetti_face/children-recipe-pic1-smaller.gif";
+                    if (recipe.thumbnail == "") recipe.thumbnail = "RecipeBook.png";
                     if (recipes.All(b => b.title != recipe.title))
                         recipes.Add(recipe);
                 }

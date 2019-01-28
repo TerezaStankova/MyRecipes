@@ -15,4 +15,13 @@
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
     <PackageReference Include="Xamarin.Forms" Version="3.4.0.1009999" />  
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\IngredientsPage.xaml.cs">
+      <DependentUpon>IngredientsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NewPage.xaml.cs">
+      <DependentUpon>NewPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
