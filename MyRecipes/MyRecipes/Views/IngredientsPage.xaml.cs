@@ -14,13 +14,14 @@ namespace MyRecipes.Views
     public partial class IngredientsPage : ContentPage
     {
 
-        readonly IList<Recipe> recipes = new ObservableCollection<Recipe>();
+        readonly IList<Recipe> recipes = new ObservableCollection<Recipe>();   
         readonly RecipeManager manager = new RecipeManager();
 
         public IngredientsPage()
         {         
             InitializeComponent();
             BindingContext = recipes;
+            noRecipeLabel.IsVisible = false;
         }
 
         async void OnRefresh(object sender, EventArgs e)
@@ -48,7 +49,7 @@ namespace MyRecipes.Views
         async void OnFindButtonClicked(object sender, EventArgs e)
         {
             // Turn on network indicator
-            this.IsBusy = true;
+            this.IsBusy = true;            
 
             try
             {
@@ -62,6 +63,8 @@ namespace MyRecipes.Views
                     if (recipes.All(b => b.title != recipe.title))
                     recipes.Add(recipe);
                 }
+                if (recipeCollection != null && (recipeCollection.Count() > 0)) { noRecipeLabel.IsVisible = false; }
+                else { noRecipeLabel.IsVisible = true; }
             }
             finally
             {
