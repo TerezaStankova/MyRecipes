@@ -52,12 +52,13 @@ namespace MyRecipes.Views
 
             try
             {
+                recipes.Clear();
                 string query = newRecipe.Text;
                 var recipeCollection = await manager.GetAll(query);
 
                 foreach (Recipe recipe in recipeCollection)
                 {
-                    if (recipe.thumbnail == "") recipe.thumbnail = "http://www.cookuk.co.uk/images/children_spaghetti_face/children-recipe-pic1-smaller.gif";
+                    if (recipe.thumbnail == "") recipe.thumbnail = "RecipeBook.png";
                     if (recipes.All(b => b.title != recipe.title))
                     recipes.Add(recipe);
                 }
@@ -78,6 +79,13 @@ namespace MyRecipes.Views
         {
             //await Navigation.PushModalAsync(
                // new AddEditBookPage(manager, recipes, (Recipe)e.Item));
+        }
+
+        void OnClickedRecipe(object sender, ItemTappedEventArgs e)
+        {
+            Recipe recipe = (Recipe)e.Item;
+            string Uri = recipe.href;
+            Device.OpenUri(new Uri(Uri));            
         }
 
         async void OnDeleteRecipe(object sender, EventArgs e)

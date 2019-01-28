@@ -9,7 +9,7 @@ namespace MyRecipes.ViewModels
     {
         public AboutViewModel()
         {
-            Title = "About";
+            Title = "Find recipe";
 
             OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
         }
