@@ -79,6 +79,8 @@ namespace MyRecipes.Views
                     if (recipes.All(b => b.title != recipe.title))
                     recipes.Add(recipe);
                 }
+                if (recipeCollection != null && (recipeCollection.Count() > 0)) { noRecipeLabel.IsVisible = false; }
+                else { noRecipeLabel.IsVisible = true; }
             }
             finally
             {
