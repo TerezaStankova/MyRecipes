@@ -25,7 +25,7 @@
         <StackLayout Orientation="Vertical" Padding="16,10,16,10">
         <StackLayout Orientation="Vertical" Padding="0,0,0,0" Spacing="5">
             <Entry x:Name="newRecipe"
-           Placeholder="Enter recipe name" />
+           Placeholder="Enter recipe title" />
 
             <Button Margin="0,10,0,0" Text="Find Recipe"
             Clicked="OnFindButtonClicked" 

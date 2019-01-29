@@ -2,17 +2,20 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using MyRecipes.Views;
+using MyRecipes.Services;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace MyRecipes
 {
     public partial class App : Application
     {
+        public static RecipesRepository RecipesRepo { get; private set; }
 
-        public App()
+        public App(string dbPath)
         {
             InitializeComponent();
 
+            RecipesRepo = new RecipesRepository(dbPath);
 
             MainPage = new MainPage();
         }

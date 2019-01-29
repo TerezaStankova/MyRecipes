@@ -22,11 +22,15 @@
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15">
-            <Label Text="Text" FontSize="Medium" />
-            <Entry Text="{Binding Item.Text}" FontSize="Small" />
+        <ScrollView>
+            <StackLayout Spacing="10" Padding="15">
+            <Label Text="Title" FontSize="Medium" />
+            <Entry Text="{Binding Item.Title}" FontSize="Small" />
+            <Label Text="Ingredients" FontSize="Medium" />
+            <Editor Text="{Binding Item.Ingredients}" FontSize="Small" Margin="0" />
             <Label Text="Description" FontSize="Medium" />
             <Editor Text="{Binding Item.Description}" FontSize="Small" Margin="0" />
-        </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

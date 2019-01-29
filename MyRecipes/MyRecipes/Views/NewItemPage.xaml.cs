@@ -11,15 +11,16 @@ namespace MyRecipes.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewItemPage : ContentPage
     {
-        public Item Item { get; set; }
+        public MyRecipe Item { get; set; }
 
         public NewItemPage()
         {
             InitializeComponent();
 
-            Item = new Item
+            Item = new MyRecipe
             {
-                Text = "Item name",
+                Title = "Item title",
+                Ingredients = "Ingredients",
                 Description = "This is an item description."
             };
 

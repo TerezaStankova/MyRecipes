@@ -21,7 +21,8 @@ namespace MyRecipes.UWP
         {
             this.InitializeComponent();
 
-            LoadApplication(new MyRecipes.App());
+            string dbPath = FileAccessHelper.GetLocalFilePath("people.db3");
+            LoadApplication(new MyRecipes.App(dbPath));          
         }
     }
 }

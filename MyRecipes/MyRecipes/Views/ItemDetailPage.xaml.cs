@@ -24,10 +24,11 @@ namespace MyRecipes.Views
         {
             InitializeComponent();
 
-            var item = new Item
+            var item = new MyRecipe
             {
-                Text = "Item 1",
-                Description = "This is an item description."
+                Title = "Pizza",
+                Ingredients = "Olive, cheese, tomatoes",
+                Description = "This is an description for pizza baking."
             };
 
             viewModel = new ItemDetailViewModel(item);
