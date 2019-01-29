@@ -19,34 +19,56 @@ namespace MyRecipes.Models
         public async Task<IEnumerable<Recipe>> GetAll()
         {
             // TODO: use GET to retrieve books
+            try
+            {
             HttpClient client = GetClient();
             string result = await client.GetStringAsync(Url);
             Result allResult = JsonConvert.DeserializeObject<Result>(result);
             List<Recipe> recipes = allResult.results;
             return recipes;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public async Task<IEnumerable<Recipe>> GetAll(string query)
         {
-            // TODO: use GET to retrieve books
-            HttpClient client = GetClient();
+            // TODO: use GET to retrieve recipes
+            try
+            {
+                HttpClient client = GetClient();
             string queryUrl = Url + "?q=" + query;
             string result = await client.GetStringAsync(queryUrl);
             Result allResult = JsonConvert.DeserializeObject<Result>(result);
             List<Recipe> recipes = allResult.results;
-            for (int i = 2; i<5 && allResult.results.Count > 0; i++) {
-                queryUrl = Url + "?q=" + query + "&p=" + i;
-                result = await client.GetStringAsync(queryUrl);
-                allResult = JsonConvert.DeserializeObject<Result>(result);
-                recipes.AddRange(allResult.results);
-            } 
+            for (int i = 2; i<5 && allResult.results.Count > 0; i++) {                
+                try
+                {
+                    queryUrl = Url + "?q=" + query + "&p=" + i;
+                    result = await client.GetStringAsync(queryUrl);
+                    allResult = JsonConvert.DeserializeObject<Result>(result);
+                    recipes.AddRange(allResult.results);
+                }
+                catch
+                {
+                    break;
+                }
+            }
             return recipes;
+        } catch
+            {
+            return null;
+            }  
         }
 
-        public async Task<IEnumerable<Recipe>> GetAllByIngredients(string query)
+    public async Task<IEnumerable<Recipe>> GetAllByIngredients(string query)
         {
-            // TODO: use GET to retrieve books
-            HttpClient client = GetClient();
+            // TODO: use GET to retrieve recipes
+            try
+            {
+                HttpClient client = GetClient();
             string queryUrl = Url + "?i=" + query;
             string result = await client.GetStringAsync(queryUrl);
             Result allResult = JsonConvert.DeserializeObject<Result>(result);
@@ -60,11 +82,16 @@ namespace MyRecipes.Models
                     allResult = JsonConvert.DeserializeObject<Result>(result);
                     recipes.AddRange(allResult.results);
                 }
-                catch {
+                catch
+                {
                     break;                    
                 }                
             }
             return recipes;
-        }
+            } catch
+            {
+            return null;
+            }  
+        }                
     }
 }

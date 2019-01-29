@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
+using Plugin.Connectivity;
+using Plugin.Connectivity.Abstractions;
+
 namespace MyRecipes.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -21,11 +24,23 @@ namespace MyRecipes.Views
         {         
             InitializeComponent();
             BindingContext = recipes;
+            noRecipeLabel.IsVisible = false;
+            noInternetLabel.IsVisible = !CrossConnectivity.Current.IsConnected;
+            CrossConnectivity.Current.ConnectivityChanged += HandleConnectivityChanged;
+        }
+
+        void HandleConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            if (e.IsConnected && noInternetLabel.IsVisible == true)
+                noInternetLabel.IsVisible = false;
+            else if (!e.IsConnected && noInternetLabel.IsVisible == false)
+                noInternetLabel.IsVisible = true;
         }
 
         async void OnRefresh(object sender, EventArgs e)
         {
             // Turn on network indicator
+            if (!CrossConnectivity.Current.IsConnected) { return; }
             this.IsBusy = true;
 
             try
@@ -47,6 +62,8 @@ namespace MyRecipes.Views
 
         async void OnFindButtonClicked(object sender, EventArgs e)
         {
+            if (!CrossConnectivity.Current.IsConnected) { return; }
+
             // Turn on network indicator
             this.IsBusy = true;
 
@@ -67,50 +84,16 @@ namespace MyRecipes.Views
             {
                 this.IsBusy = false;
             }
-        }
-
-        async void OnAddNewRecipe(object sender, EventArgs e)
-        {
-            /*await Navigation.PushModalAsync(
-                new AddEditBookPage(manager, books));*/
-        }
-
-        async void OnEditRecipe(object sender, ItemTappedEventArgs e)
-        {
-            //await Navigation.PushModalAsync(
-               // new AddEditBookPage(manager, recipes, (Recipe)e.Item));
-        }
+        }     
+       
 
         void OnClickedRecipe(object sender, ItemTappedEventArgs e)
         {
+            if (!CrossConnectivity.Current.IsConnected) { return; }
+
             Recipe recipe = (Recipe)e.Item;
             string Uri = recipe.href;
             Device.OpenUri(new Uri(Uri));            
-        }
-
-        async void OnDeleteRecipe(object sender, EventArgs e)
-        {
-           /* MenuItem item = (MenuItem)sender;
-            Recipe recipe = item.CommandParameter as Recipe;
-            if (recipe != null)
-            {
-                if (await this.DisplayAlert("Delete Recipe?",
-                    "Are you sure you want to delete the recipe '"
-                        + recipe.Title + "'?", "Yes", "Cancel") == true)
-                {
-                    this.IsBusy = true;
-                    try
-                    {
-                        await manager.Delete(recipe.ISBN);
-                        recipes.Remove(recipe);
-                    }
-                    finally
-                    {
-                        this.IsBusy = false;
-                    }
-
-                }
-            }*/
-        }
+        }        
     }
 }
