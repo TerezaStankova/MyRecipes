@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
+using Plugin.Connectivity;
+using Plugin.Connectivity.Abstractions;
+
 namespace MyRecipes.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -21,12 +24,23 @@ namespace MyRecipes.Views
         {         
             InitializeComponent();
             BindingContext = recipes;
-            noRecipeLabel.IsVisible = false;
+            noRecipeLabel.IsVisible = false;            
+            noInternetLabel.IsVisible = !CrossConnectivity.Current.IsConnected;
+            CrossConnectivity.Current.ConnectivityChanged += HandleConnectivityChanged;
+        }
+
+        void HandleConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {            
+            if (e.IsConnected && noInternetLabel.IsVisible == true)
+                noInternetLabel.IsVisible = false; 
+            else if (!e.IsConnected && noInternetLabel.IsVisible == false)
+                noInternetLabel.IsVisible = true;
         }
 
         async void OnRefresh(object sender, EventArgs e)
         {
             // Turn on network indicator
+            if (!CrossConnectivity.Current.IsConnected) { return; }
             this.IsBusy = true;            
 
             try
@@ -48,6 +62,8 @@ namespace MyRecipes.Views
 
         async void OnFindButtonClicked(object sender, EventArgs e)
         {
+            if (!CrossConnectivity.Current.IsConnected) { return; }
+
             // Turn on network indicator
             this.IsBusy = true;            
 
@@ -75,6 +91,8 @@ namespace MyRecipes.Views
 
         void OnClickedRecipe(object sender, ItemTappedEventArgs e)
         {
+            if (!CrossConnectivity.Current.IsConnected) { return; }
+
             Recipe recipe = (Recipe)e.Item;
             string Uri = recipe.href;
             Device.OpenUri(new Uri(Uri));            

@@ -67,6 +67,17 @@
                 </Label.FormattedText>
             </Label>
 
+            <Label x:Name="noInternetLabel">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <FormattedString.Spans>
+                            <Span Text="Are you connected?" />
+                            <Span Text=" " />
+                            <Span Text="Check your Internet connection." FontAttributes="Bold"/>                            
+                        </FormattedString.Spans>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
 
             <ListView ItemsSource="{Binding}"
                   ItemTapped="OnClickedRecipe">
