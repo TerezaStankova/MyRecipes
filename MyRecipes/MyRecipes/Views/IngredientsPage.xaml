@@ -80,7 +80,8 @@
             </Label>
 
             <ListView ItemsSource="{Binding}"
-                  ItemTapped="OnClickedRecipe">
+                  ItemTapped="OnClickedRecipe"
+                  HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>     
                             
