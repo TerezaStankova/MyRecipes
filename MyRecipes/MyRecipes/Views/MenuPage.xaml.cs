@@ -19,7 +19,7 @@ namespace MyRecipes.Views
             menuItems = new List<HomeMenuItem>
             {
                 new HomeMenuItem {Id = MenuItemType.Browse, Title="My Recipes" },
-                new HomeMenuItem {Id = MenuItemType.Recipe, Title="Find new" },
+                new HomeMenuItem {Id = MenuItemType.Recipe, Title="Browse" },
                 new HomeMenuItem {Id = MenuItemType.Ingredients, Title="Match ingredients" }
             };
 

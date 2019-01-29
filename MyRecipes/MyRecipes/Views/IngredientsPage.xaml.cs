@@ -24,7 +24,7 @@ namespace MyRecipes.Views
         {         
             InitializeComponent();
             BindingContext = recipes;
-            noRecipeLabel.IsVisible = false;            
+            noRecipeLabel.IsVisible = true;            
             noInternetLabel.IsVisible = !CrossConnectivity.Current.IsConnected;
             CrossConnectivity.Current.ConnectivityChanged += HandleConnectivityChanged;
         }
@@ -41,7 +41,8 @@ namespace MyRecipes.Views
         {
             // Turn on network indicator
             if (!CrossConnectivity.Current.IsConnected) { return; }
-            this.IsBusy = true;            
+            this.IsBusy = true;
+            noRecipeLabel.IsVisible = false;
 
             try
             {
@@ -65,7 +66,8 @@ namespace MyRecipes.Views
             if (!CrossConnectivity.Current.IsConnected) { return; }
 
             // Turn on network indicator
-            this.IsBusy = true;            
+            this.IsBusy = true;
+            noRecipeLabel.IsVisible = false;
 
             try
             {
