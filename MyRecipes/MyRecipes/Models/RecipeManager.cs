@@ -53,10 +53,16 @@ namespace MyRecipes.Models
             List<Recipe> recipes = allResult.results;
             for (int i = 2; i < 5 && allResult.results.Count > 0; i++)
             {
-                queryUrl = Url + "?i=" + query + "&p=" + i;
-                result = await client.GetStringAsync(queryUrl);
-                allResult = JsonConvert.DeserializeObject<Result>(result);
-                recipes.AddRange(allResult.results);
+                try
+                {
+                    queryUrl = Url + "?i=" + query + "&p=" + i;
+                    result = await client.GetStringAsync(queryUrl);
+                    allResult = JsonConvert.DeserializeObject<Result>(result);
+                    recipes.AddRange(allResult.results);
+                }
+                catch {
+                    break;                    
+                }                
             }
             return recipes;
         }
