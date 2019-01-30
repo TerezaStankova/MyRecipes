@@ -6,11 +6,11 @@ namespace MyRecipes.ViewModels
 {
     public class ItemDetailViewModel : BaseViewModel
     {
-        public MyRecipe Item { get; set; }
+        public MyRecipe MyRecipe { get; set; }
         public ItemDetailViewModel(MyRecipe item = null)
         {
             Title = item?.Title;
-            Item = item;
+            MyRecipe = item;
         }
     }
 }

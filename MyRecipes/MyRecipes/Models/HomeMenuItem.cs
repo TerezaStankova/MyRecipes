@@ -5,9 +5,9 @@ using System.Text;
 namespace MyRecipes.Models
 {
     public enum MenuItemType
-    {
+    {        
+        MyRecipes,
         Browse,
-        Recipe, 
         Ingredients
     }
     public class HomeMenuItem

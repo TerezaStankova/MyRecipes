@@ -30,6 +30,19 @@ namespace MyRecipes.ViewModels
                 Items.Add(newItem);                
                 await App.RecipesRepo.AddNewRecipeAsync(newItem.Title, newItem.Ingredients, newItem.Description);
             });
+
+            MessagingCenter.Subscribe<ItemDetailPage, MyRecipe>(this, "UpdateItem", async (obj, item) =>
+            {
+                var newItem = item as MyRecipe;                
+                await App.RecipesRepo.SaveItemAsync(newItem);
+            });
+
+            MessagingCenter.Subscribe<ItemDetailPage, MyRecipe>(this, "DeleteItem", async (obj, item) =>
+            {
+                var deleteItem = item as MyRecipe;
+                Items.Remove(item: deleteItem);
+                await App.RecipesRepo.DeleteItemAsync(item: deleteItem);                
+            });
         }
 
         async Task ExecuteLoadItemsCommand()

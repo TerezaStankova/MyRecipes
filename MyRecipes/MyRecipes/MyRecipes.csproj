@@ -21,8 +21,8 @@
     <Compile Update="Views\IngredientsPage.xaml.cs">
       <DependentUpon>IngredientsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\NewPage.xaml.cs">
-      <DependentUpon>NewPage.xaml</DependentUpon>
+    <Compile Update="Views\BrowsePage.xaml.cs">
+      <DependentUpon>BrowsePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

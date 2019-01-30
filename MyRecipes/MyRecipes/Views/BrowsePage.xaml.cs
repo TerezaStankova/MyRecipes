@@ -14,13 +14,13 @@ using Plugin.Connectivity.Abstractions;
 namespace MyRecipes.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class NewPage : ContentPage
+    public partial class BrowsePage : ContentPage
     {
 
         readonly IList<Recipe> recipes = new ObservableCollection<Recipe>();
         readonly RecipeManager manager = new RecipeManager();
 
-        public NewPage()
+        public BrowsePage()
         {         
             InitializeComponent();
             BindingContext = recipes;

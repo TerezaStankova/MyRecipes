@@ -17,7 +17,7 @@ namespace MyRecipes.Views
 
             MasterBehavior = MasterBehavior.Popover;
 
-            MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
+            MenuPages.Add((int)MenuItemType.MyRecipes, (NavigationPage)Detail);
         }
 
         public async Task NavigateFromMenu(int id)
@@ -26,11 +26,11 @@ namespace MyRecipes.Views
             {
                 switch (id)
                 {
-                    case (int)MenuItemType.Browse:
+                    case (int)MenuItemType.MyRecipes:
                         MenuPages.Add(id, new NavigationPage(new ItemsPage()));
                         break;
-                    case (int)MenuItemType.Recipe:
-                        MenuPages.Add(id, new NavigationPage(new NewPage()));
+                    case (int)MenuItemType.Browse:
+                        MenuPages.Add(id, new NavigationPage(new BrowsePage()));
                         break;
                     case (int)MenuItemType.Ingredients:
                         MenuPages.Add(id, new NavigationPage(new IngredientsPage()));
