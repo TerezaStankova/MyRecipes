@@ -21,7 +21,7 @@ namespace MyRecipes.Views
             InitializeComponent();
             BindingContext = this.viewModel = viewModel;
             MyRecipe = viewModel.MyRecipe;
-            edit = viewModel.ShowEdit;
+            edit = false;
         }
 
         public ItemDetailPage()
@@ -61,12 +61,10 @@ namespace MyRecipes.Views
             if (MyRecipe != null)
             {
                 if (await this.DisplayAlert("Confirm", $"Are you sure you want to edit {MyRecipe.Title}?", "Yes", "No") == true)
-                {
-                    viewModel.ShowEdit = true;
+                {                    
                     edit = true;
                 }
-                else {
-                    viewModel.ShowEdit = false;
+                else {                     
                     edit = false;
                     }
 
