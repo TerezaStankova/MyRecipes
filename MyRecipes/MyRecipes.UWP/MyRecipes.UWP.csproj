@@ -107,6 +107,7 @@
   <ItemGroup>
     <Content Include="ic_action_new.png" />
     <Content Include="ic_autorenew.png" />
+    <Content Include="ic_edit.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />

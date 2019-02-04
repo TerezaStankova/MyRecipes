@@ -17,6 +17,7 @@ namespace MyRecipes.ViewModels
     {
         public ObservableCollection<MyRecipe> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
+        
 
         public ItemsViewModel()
         {
@@ -58,6 +59,8 @@ namespace MyRecipes.ViewModels
                 }
             });
         }
+
+        
 
         async Task ExecuteLoadItemsCommand()
         {

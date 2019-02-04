@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MyRecipes.Models;
 using SQLite;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace MyRecipes.Services
 {

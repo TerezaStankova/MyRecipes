@@ -2,9 +2,32 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyRecipes.Views.ItemDetailPage"
+             xmlns:cvt="clr-namespace:MyRecipes.Services"
              Title="{Binding Title}">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--Page Level Resources: Compatible with Xamarin Live Player -->           
+            <cvt:InverseBooleanConverter x:Key="ibConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Edit" x:Name="editableItem" Clicked="Edit_Clicked" IsEnabled="{Binding Source={x:Reference editableTitle}, Path=IsVisible, Converter={StaticResource ibConverter}}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="ic_edit.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Update" Clicked="Update_Clicked" IsEnabled="{Binding Source={x:Reference editableTitle}, Path=IsVisible}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="save.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
         <ToolbarItem Text="Delete" Clicked="OnDelete">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -12,22 +35,17 @@
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem Text="Save" Clicked="Update_Clicked">
-            <ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="UWP" Value="save.png"/>
-                </OnPlatform>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
     <StackLayout Spacing="20" Padding="15">
         <Label Text="Title:" FontSize="Medium" />
-        <Entry Text="{Binding MyRecipe.Title}" FontSize="Small"/>
-        <Label Text="{Binding MyRecipe.Id}" FontSize="Small"/>
+        <Entry Text="{Binding MyRecipe.Title}" x:Name="editableTitle" FontSize="Small" IsVisible="False"/>
+        <Label Text="{Binding MyRecipe.Title}" FontSize="Small" IsVisible="{Binding Source={x:Reference editableTitle}, Path=IsVisible, Converter={StaticResource ibConverter}}"/>
         <Label Text="Ingredients:" FontSize="Medium" />
-        <Entry Text="{Binding MyRecipe.Ingredients}" FontSize="Small"/>
+        <Entry Text="{Binding MyRecipe.Ingredients}" FontSize="Small" IsVisible="{Binding Source={x:Reference editableTitle}, Path=IsVisible}"/>
+        <Label Text="{Binding MyRecipe.Ingredients}" FontSize="Small" IsVisible="{Binding Source={x:Reference editableTitle}, Path=IsVisible, Converter={StaticResource ibConverter}}"/>
         <Label Text="Description:" FontSize="Medium" />
-        <Entry Text="{Binding MyRecipe.Description}" FontSize="Small"/>
+        <Entry Text="{Binding MyRecipe.Description}" FontSize="Small" IsVisible="{Binding Source={x:Reference editableTitle}, Path=IsVisible}"/>
+        <Label Text="{Binding MyRecipe.Description}" FontSize="Small" IsVisible="{Binding Source={x:Reference editableTitle}, Path=IsVisible, Converter={StaticResource ibConverter}}"/>
     </StackLayout>
 </ContentPage>

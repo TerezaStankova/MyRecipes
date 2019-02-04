@@ -14,12 +14,14 @@ namespace MyRecipes.Views
     {
         ItemDetailViewModel viewModel;
         public MyRecipe MyRecipe { get; set; }
+        public bool edit { get; set; }
 
         public ItemDetailPage(ItemDetailViewModel viewModel)
         {
             InitializeComponent();
             BindingContext = this.viewModel = viewModel;
             MyRecipe = viewModel.MyRecipe;
+            edit = viewModel.ShowEdit;
         }
 
         public ItemDetailPage()
@@ -51,13 +53,32 @@ namespace MyRecipes.Views
                     await Navigation.PopAsync();
                 }
             }
-        }        
+        }
+
+        async void Edit_Clicked(object sender, EventArgs e)
+        {
+            edit = true;
+            if (MyRecipe != null)
+            {
+                if (await this.DisplayAlert("Confirm", $"Are you sure you want to edit {MyRecipe.Title}?", "Yes", "No") == true)
+                {
+                    viewModel.ShowEdit = true;
+                    edit = true;
+                }
+                else {
+                    viewModel.ShowEdit = false;
+                    edit = false;
+                    }
+
+                editableTitle.IsVisible = edit;
+            }
+        }
 
         async void OnDelete(object sender, EventArgs e)
         {            
             if (MyRecipe != null)
             {
-                if (await this.DisplayAlert("Confirm", $"Are you sure you want to delete {MyRecipe.Id}?", "Yes", "No") == true)
+                if (await this.DisplayAlert("Confirm", $"Are you sure you want to delete {MyRecipe.Title}?", "Yes", "No") == true)
                 {                   
                     MessagingCenter.Send(this, "DeleteItem", MyRecipe);
                     await Navigation.PopAsync();                                    
