@@ -6,18 +6,18 @@ namespace MyRecipes.Models
     [Table("MyRecipe")]
     public class MyRecipe : INotifyPropertyChanged
     {
-        private int Id;
-        [PrimaryKey, AutoIncrement]
-        public int ID
+        private int _Id;
+        [PrimaryKey, AutoIncrement, NotNull]
+        public int Id
         {
             get
             {
-                return Id;
+                return _Id;
             }
             set
             {
-                this.Id = value;
-                OnPropertyChanged(nameof(ID));
+                this._Id = value;
+                OnPropertyChanged(nameof(Id));
             }
         }
         private string _title;
@@ -50,7 +50,7 @@ namespace MyRecipes.Models
         }
 
         private string _description;
-        [NotNull, MaxLength(500)]
+        [MaxLength(500)]
         public string Description
         {
             get

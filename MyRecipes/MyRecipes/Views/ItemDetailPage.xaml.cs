@@ -5,7 +5,7 @@ using Xamarin.Forms.Xaml;
 
 using MyRecipes.Models;
 using MyRecipes.ViewModels;
-
+using MyRecipes.Services;
 
 namespace MyRecipes.Views
 {
@@ -54,11 +54,11 @@ namespace MyRecipes.Views
         }        
 
         async void OnDelete(object sender, EventArgs e)
-        {
+        {            
             if (MyRecipe != null)
             {
-                if (await this.DisplayAlert("Confirm", $"Are you sure you want to delete {MyRecipe.Title}?", "Yes", "No") == true)
-                {
+                if (await this.DisplayAlert("Confirm", $"Are you sure you want to delete {MyRecipe.Id}?", "Yes", "No") == true)
+                {                   
                     MessagingCenter.Send(this, "DeleteItem", MyRecipe);
                     await Navigation.PopAsync();                                    
                 }

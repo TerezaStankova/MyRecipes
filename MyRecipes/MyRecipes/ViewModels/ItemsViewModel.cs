@@ -28,7 +28,7 @@ namespace MyRecipes.ViewModels
             {
                 var newItem = item as MyRecipe;
                 Items.Add(newItem);                
-                await App.RecipesRepo.AddNewRecipeAsync(newItem.Title, newItem.Ingredients, newItem.Description);
+                await App.RecipesRepo.AddNewRecipeAsync(newItem);
             });
 
             MessagingCenter.Subscribe<ItemDetailPage, MyRecipe>(this, "UpdateItem", async (obj, item) =>
@@ -40,8 +40,22 @@ namespace MyRecipes.ViewModels
             MessagingCenter.Subscribe<ItemDetailPage, MyRecipe>(this, "DeleteItem", async (obj, item) =>
             {
                 var deleteItem = item as MyRecipe;
-                Items.Remove(item: deleteItem);
-                await App.RecipesRepo.DeleteItemAsync(item: deleteItem);                
+                //Items.Remove(deleteItem);
+                await App.RecipesRepo.DeleteItemAsync(deleteItem);
+                RecipesRepository.Recipes.Remove(deleteItem);
+                try
+                {
+                    Items.Clear();
+                    var items = RecipesRepository.Recipes;
+                    foreach (MyRecipe i in items)
+                    {
+                        Items.Add(i);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
             });
         }
 
@@ -51,7 +65,7 @@ namespace MyRecipes.ViewModels
                 return;
 
             IsBusy = true;
-            await App.RecipesRepo.AddAllRecipesAsync();
+            await App.RecipesRepo.GetAllRecipesAsync();
 
             try
             {

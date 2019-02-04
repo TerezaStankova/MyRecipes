@@ -24,6 +24,7 @@
     <StackLayout Spacing="20" Padding="15">
         <Label Text="Title:" FontSize="Medium" />
         <Entry Text="{Binding MyRecipe.Title}" FontSize="Small"/>
+        <Label Text="{Binding MyRecipe.Id}" FontSize="Small"/>
         <Label Text="Ingredients:" FontSize="Medium" />
         <Entry Text="{Binding MyRecipe.Ingredients}" FontSize="Small"/>
         <Label Text="Description:" FontSize="Medium" />

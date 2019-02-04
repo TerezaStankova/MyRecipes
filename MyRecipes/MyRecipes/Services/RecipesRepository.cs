@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MyRecipes.Models;
 using SQLite;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace MyRecipes.Services
 {
@@ -12,7 +13,7 @@ namespace MyRecipes.Services
     {
         public static IList<MyRecipe> Recipes { get; set; }
         SQLiteAsyncConnection database;
-        public string StatusMessage { get; set; }
+        public string StatusMessage { get; set; }       
 
         public RecipesRepository(string dbPath)
         {
@@ -28,12 +29,12 @@ namespace MyRecipes.Services
 
         public Task<MyRecipe> GetItemAsync(int id)
         {
-            return database.Table<MyRecipe>().Where(i => i.ID == id).FirstOrDefaultAsync();
+            return database.Table<MyRecipe>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
         public Task<int> SaveItemAsync(MyRecipe item)
         {
-            if (item.ID != 0)
+            if (item.Id != 0)
             {
                 return database.UpdateAsync(item);
             }
@@ -48,22 +49,20 @@ namespace MyRecipes.Services
             return database.DeleteAsync(item);
         }
 
-        public async Task AddNewRecipeAsync(string title, string ingredients, string description)
+        public async Task AddNewRecipeAsync(MyRecipe item)
         {
             int result = 0;
             try
             {
                 //basic validation to ensure a title was entered
-                if (string.IsNullOrEmpty(title))
+                if (string.IsNullOrEmpty(item.Title))
                     throw new Exception("Title required");
 
-                if (string.IsNullOrEmpty(description))
-                    throw new Exception("Description required");
-
-                MyRecipe recipe = new MyRecipe { Title = title, Description = description, Ingredients = ingredients };
+                if (string.IsNullOrEmpty(item.Description))
+                    throw new Exception("Description required");                
 
 
-                result = await database.InsertAsync(recipe);
+                result = await database.InsertAsync(item);
                 List<MyRecipe> recipes;
                 recipes = await database.Table<MyRecipe>().OrderBy(a => a.Title).ToListAsync();
                 Recipes.Clear();

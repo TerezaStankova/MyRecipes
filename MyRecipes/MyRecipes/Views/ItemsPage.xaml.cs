@@ -39,10 +39,10 @@ namespace MyRecipes.Views
 
         protected override void OnAppearing()
         {
-            base.OnAppearing();
+            base.OnAppearing();                   
 
-            if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
+            viewModel.LoadItemsCommand.Execute(null);
         }
+        
     }
 }
